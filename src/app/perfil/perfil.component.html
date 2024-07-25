@@ -1,0 +1,176 @@
+<div class="alert" *ngIf="showAlert">{{ alertMessage }}</div>
+
+<div class="perfil-admin-container">
+  <div class="perfil-container">
+    <h2>Perfil de Usuario</h2>
+    <div>
+      <label>Nombre:</label>
+      <span>{{ userProfile?.nombre }}</span>
+    </div>
+    <ng-container *ngIf="!userProfile?.isAdmin">
+      <div>
+        <label>Información:</label>
+        <button (click)="editField('info')" class="button">Editar</button>
+      </div>
+      <div>
+        <label>Pedidos:</label>
+        <ul>
+          <li *ngFor="let order of userProfile?.orders">
+            <p>Fecha: {{ order.createdAt | date }}</p>
+            <p>Dirección: {{ order.direccion.calle }}, {{ order.direccion.numero }}, {{ order.direccion.colonia }}, {{ order.direccion.estado }}, {{ order.direccion.phone }}</p>
+            <p>Total: {{ order.total }} MXN</p>
+            <p><strong>Detalles:</strong></p>
+            <ul>
+              <li *ngFor="let item of order.cart">
+                <img [src]="item.imagen" alt="{{ item.Nombre }}" class="product-image">
+                <p>{{ item.Nombre }} - {{ item.quantity }} x {{ item.Precio }} MXN</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    <button *ngIf="userProfile?.isAdmin" (click)="openAdminModal()" class="button admin-button">Editar Plantilla</button>
+  </div>
+</div>
+
+<!-- Modal para editar información -->
+<div *ngIf="isEditingField" class="modal">
+  <div class="modal-content">
+    <h2>Editar Información</h2>
+    <div>
+      <label>Calle:</label>
+      <input [(ngModel)]="tempFieldValue.calle" type="text" />
+    </div>
+    <div>
+      <label>Número Int/Ext:</label>
+      <input [(ngModel)]="tempFieldValue.numero" type="text" />
+    </div>
+    <div>
+      <label>Colonia:</label>
+      <input [(ngModel)]="tempFieldValue.colonia" type="text" />
+    </div>
+    <div>
+      <label>Estado:</label>
+      <input [(ngModel)]="tempFieldValue.estado" type="text" />
+    </div>
+    <div>
+      <label>Teléfono:</label>
+      <input [(ngModel)]="tempFieldValue.phone" type="text" />
+    </div>
+    <div class="modal-buttons">
+      <button (click)="saveField()" class="button">Guardar</button>
+      <button (click)="closeFieldModal()" class="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para la administración completa -->
+<div *ngIf="showAdminModal" class="modal">
+  <div class="modal-content">
+    <h2>Administración</h2>
+    <div class="admin-columns">
+      <div class="admin-column">
+        <div *ngFor="let item of adminItems | slice:0:4">
+          <label>{{ item.label }}:</label>
+          <button (click)="editItem(item.key)" class="button">Editar</button>
+        </div>
+      </div>
+      <div class="admin-column">
+        <div *ngFor="let item of adminItems | slice:4:adminItems.length">
+          <label>{{ item.label }}:</label>
+          <button (click)="editItem(item.key)" class="button">Editar</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button (click)="openFooterColorModal()" class="button">Editar Color del Pie de Página</button>
+      <button (click)="closeAdminModal()" class="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para la edición del color de la cabecera -->
+<div *ngIf="showHeaderColorModal" class="modal">
+  <div class="modal-content">
+    <h2>Editar Color de Cabecera</h2>
+    <div class="color-picker">
+      <div class="color-item">
+        <label>Color de Encabezado:</label>
+        <color-chrome [(color)]="adminConfig.colors.header" (onChangeComplete)="applyColorChange()"></color-chrome>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button (click)="saveHeaderColorConfig()" class="button">Guardar</button>
+      <button (click)="closeHeaderColorModal()" class="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para la edición del color del pie de página -->
+<div *ngIf="showFooterColorModal" class="modal">
+  <div class="modal-content">
+    <h2>Editar Color del Pie de Página</h2>
+    <div class="color-picker">
+      <div class="color-item">
+        <label>Color Primario:</label>
+        <color-chrome [(color)]="adminConfig.colors.primary" (onChangeComplete)="applyColorChange()"></color-chrome>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button (click)="saveFooterColorConfig()" class="button">Guardar</button>
+      <button (click)="closeFooterColorModal()" class="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para la edición específica dentro del modal de administración -->
+<div *ngIf="isEditing" class="modal">
+  <div class="modal-content">
+    <h2>Editar {{ currentItem.label }}</h2>
+    <div *ngIf="currentItem.key !== 'colors' && currentItem.key !== 'logo' && currentItem.key !== 'images'">
+      <textarea [(ngModel)]="adminConfig[currentItem.key]"></textarea>
+    </div>
+    <div *ngIf="currentItem.key === 'logo'">
+      <label>{{ currentItem.label }}:</label>
+      <div class="image-upload-preview">
+        <input type="file" (change)="onFileSelected($event, 'logo')" accept="image/png, image/jpeg" />
+        <div *ngIf="adminConfig.logo" class="image-preview">
+          <img [src]="adminConfig.logo" alt="Preview" />
+        </div>
+      </div>
+      <div>
+        <label>Tamaño:</label>
+        <input [(ngModel)]="logoSize" type="text" placeholder="Ej. 100x100" />
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button (click)="saveConfig()" *ngIf="currentItem.key !== 'policies' && currentItem.key !== 'about' && currentItem.key !== 'vision' && currentItem.key !== 'terms'" class="button">Guardar</button>
+      <button (click)="savePolicies()" *ngIf="currentItem.key === 'policies'" class="button">Guardar</button>
+      <button (click)="saveAbout()" *ngIf="currentItem.key === 'about'" class="button">Guardar</button>
+      <button (click)="saveVisionMission()" *ngIf="currentItem.key === 'vision'" class="button">Guardar</button>
+      <button (click)="saveTerms()" *ngIf="currentItem.key === 'terms'" class="button">Guardar</button>
+      <button (click)="closeModal()" class="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario para agregar productos (solo visible para administradores) -->
+<ng-container *ngIf="userProfile?.isAdmin">
+  <div class="agregar-producto-container">
+    <h2>Agregar Producto</h2>
+    <div>
+      <label>Nombre del Producto:</label>
+      <input [(ngModel)]="newProducto.Nombre" type="text" />
+    </div>
+    <div>
+      <label>Precio:</label>
+      <input [(ngModel)]="newProducto.Precio" type="text" />
+    </div>
+    <div>
+      <label>URL de la Imagen:</label>
+      <input [(ngModel)]="newProducto.imagen" type="text" />
+    </div>
+    <button (click)="addProduct()" class="button">Agregar Producto</button>
+  </div>
+</ng-container>

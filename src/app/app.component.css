@@ -1,0 +1,225 @@
+/* app.component.css */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer */
+.fixed-footer {
+  background-color: var(--primary-color);
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* Resto del CSS */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: var(--header-color); /* Cambiado para usar la variable CSS */
+  padding: 50px;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  margin-right: 20px;
+}
+
+nav a img.logo {
+  height: 150px;
+  position: absolute;
+  left: 20px;
+}
+
+.auth-links {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  right: 90px;
+}
+
+.auth-links a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem 1rem;
+}
+
+.auth-links a:hover {
+  background-color: #4e390b;
+}
+
+.por-genero {
+  position: relative;
+}
+
+.opciones-genero {
+  display: none;
+  position: absolute;
+  background-color: #4e390b;
+  border: 1px solid #4e390b;
+  padding: 10px;
+  width: 100px;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+}
+
+.por-genero:hover .opciones-genero {
+  display: block;
+}
+
+.footer-sections {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-section h3 {
+  margin-bottom: 10px;
+}
+
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.derechos-reservados {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #1f1d1d;
+  margin-top: 20px;
+}
+
+.cart-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+}
+
+.cart-icon {
+  height: 40px;
+}
+
+nav a:last-child {
+  padding: 0.5rem 1rem;
+}
+
+nav a:last-child:hover {
+  background-color: #4e390b;
+}
+
+/* Estilos para los íconos de redes sociales */
+.wrapper {
+  display: inline-flex;
+  list-style: none;
+  height: 120px;
+  width: 100%;
+  padding-top: 40px;
+  font-family: "Poppins", sans-serif;
+  justify-content: center;
+}
+
+.wrapper .icon {
+  position: relative;
+  background: #807f7f;
+  border-radius: 50%;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background: #fff;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #fff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background: #1877f2;
+  color: #fff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+  background: #1da1f2;
+  color: #fff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+  background: #e4405f;
+  color: #fff;
+}

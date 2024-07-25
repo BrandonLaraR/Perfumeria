@@ -1,0 +1,57 @@
+<div class="main-content">
+  <h1>Nuestros Productos</h1>
+  <p>Aquí encontrarás una lista de todos nuestros productos.</p>
+  <div class="search-container">
+    <div class="container">
+      <input checked="" class="checkbox" type="checkbox">
+      <div class="mainbox">
+        <div class="iconContainer">
+          <svg viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="search_icon">
+            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path>
+          </svg>
+        </div>
+        <input class="search_input" placeholder="search" type="text" [(ngModel)]="searchTerm" (input)="filterProducts()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="productos-container" #productoItems>
+  <div *ngFor="let producto of filteredProductos" class="producto" (click)="openModal(producto._id)">
+    <img [src]="producto.imagen" alt="{{ producto.Nombre }}">
+    <p>{{ producto.Nombre }}</p>
+    <p class="precio">{{ producto.Precio }}</p>
+  </div>
+</div>
+
+<!-- Modal Window -->
+<div id="productModal" class="modal" *ngIf="selectedProducto">
+  <div class="modal-content">
+    <div class="modal-body">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <img [src]="selectedProducto.imagen" alt="{{ selectedProducto.Nombre }}">
+      <div class="product-details">
+        <h2>{{ selectedProducto.Nombre }}</h2>
+        <p>{{ selectedProducto.Descripcion }}</p>
+        <p class="precio">{{ selectedProducto.Precio }} MXN</p>
+        <label for="quantity">Cantidad</label>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity()">-</button>
+          <input type="text" id="quantity" [(ngModel)]="quantity" readonly>
+          <button (click)="increaseQuantity()">+</button>
+        </div>
+        <button class="buy-button" (click)="addToCart()">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de éxito -->
+<div id="successModal" class="modal" *ngIf="showSuccessModal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <span class="close" (click)="closeSuccessModal()">&times;</span>
+      <p>Agregado exitosamente</p>
+    </div>
+  </div>
+</div>

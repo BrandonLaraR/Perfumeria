@@ -1,0 +1,5 @@
+<h1 class="termi">{{ terminosCondiciones?.Titulo }}</h1>
+
+<div class="contenido">
+  <p *ngIf="terminosCondiciones?.Contenido" [innerHTML]="formatContenido(terminosCondiciones.Contenido)"></p>
+</div>

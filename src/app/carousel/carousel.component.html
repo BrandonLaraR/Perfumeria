@@ -1,0 +1,13 @@
+<!-- carousel.component.html -->
+
+<div class="carrusel-container">
+  <div class="carrusel">
+    <div class="slides">
+      <div class="slide" *ngFor="let slide of slides; let i = index" [class.active]="i === currentIndex">
+       
+      </div>
+    </div>
+    <button (click)="prevSlide()" class="prev">&#10094;</button>
+    <button (click)="nextSlide()" class="next">&#10095;</button>
+  </div>
+</div>

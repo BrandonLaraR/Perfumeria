@@ -1,0 +1,76 @@
+<div class="gestion-usuarios-container">
+  <h2>Gestión de Usuarios</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Administrador</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.nombre }}</td>
+        <td>{{ user.correo }}</td>
+        <td>{{ user.isAdmin ? 'Sí' : 'No' }}</td>
+        <td>
+          <button class="button" (click)="toggleAdmin(user)">
+            {{ user.isAdmin ? 'Remover Admin' : 'Hacer Admin' }}
+          </button>
+          <button class="button delete-button" (click)="deleteUser(user)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Gestión de Productos</h2>
+  <div class="product-search-container">
+    <label for="productSearch">Buscar Producto:</label>
+    <input id="productSearch" type="text" [(ngModel)]="productSearchText" (input)="filterProducts()" />
+    <ul class="product-list">
+      <li *ngFor="let product of filteredProducts" (click)="selectProduct(product)">{{ product.Nombre }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedProduct" class="product-details">
+    <h3>Detalles del Producto</h3>
+    <div>
+      <label>Nombre:</label>
+      <span>{{ selectedProduct.Nombre }}</span>
+    </div>
+    <div>
+      <label>Precio:</label>
+      <span>{{ selectedProduct.Precio }}</span>
+    </div>
+    <div>
+      <label>Imagen:</label>
+      <img [src]="selectedProduct.imagen" class="product-image" alt="{{ selectedProduct.Nombre }}">
+    </div>
+    <div class="button-group">
+      <button class="button" (click)="editProduct(selectedProduct)">Editar</button>
+      <button class="button delete-button" (click)="deleteProduct(selectedProduct._id)">Eliminar</button>
+      <button class="button cancel-button" (click)="cancelSelect()">Cancelar</button>
+    </div>
+  </div>
+
+  <div *ngIf="isEditingProduct" class="edit-product-form">
+    <h3>Editar Producto</h3>
+    <div>
+      <label>Nombre:</label>
+      <input [(ngModel)]="currentProduct.Nombre" type="text" />
+    </div>
+    <div>
+      <label>Precio:</label>
+      <input [(ngModel)]="currentProduct.Precio" type="text" />
+    </div>
+    <div>
+      <label>Imagen:</label>
+      <input [(ngModel)]="currentProduct.imagen" type="text" />
+    </div>
+    <div class="button-group">
+      <button class="button" (click)="updateProduct()">Guardar</button>
+      <button class="button cancel-button" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+</div>

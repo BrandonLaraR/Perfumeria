@@ -1,0 +1,292 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.container {
+  position: relative;
+  box-sizing: border-box;
+  width: fit-content;
+}
+
+.mainbox {
+  box-sizing: border-box;
+  position: relative;
+  width: 230px;
+  height: 50px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  border-radius: 160px;
+  background-color: rgb(0, 0, 0);
+  transition: all 0.3s ease;
+}
+
+.checkbox:focus {
+  border: none;
+  outline: none;
+}
+
+.checkbox:checked {
+  right: 10px;
+}
+
+.checkbox:checked ~ .mainbox {
+  width: 50px;
+}
+
+.checkbox:checked ~ .mainbox .search_input {
+  width: 0;
+  height: 0px;
+}
+
+.checkbox:checked ~ .mainbox .iconContainer {
+  padding-right: 8px;
+}
+
+.checkbox {
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 17px;
+  top: 10px;
+  z-index: 9;
+  cursor: pointer;
+  appearance: none;
+}
+
+.search_input {
+  box-sizing: border-box;
+  height: 100%;
+  width: 170px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  font-size: 1em;
+  color: white;
+  transition: all 0.3s ease;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.search_input::placeholder {
+  color: rgba(255, 255, 255, 0.776);
+}
+
+.iconContainer {
+  box-sizing: border-box;
+  padding-top: 5px;
+  width: fit-content;
+  transition: all 0.3s ease;
+}
+
+.search_icon {
+  box-sizing: border-box;
+  fill: white;
+  font-size: 1.3em;
+}
+
+.productos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.producto {
+  width: calc(30% - 40px); /* Ancho de cada tarjeta */
+  margin: 20px;
+  padding: 15px;
+  background-color: #ffffff; /* Color de fondo */
+  border: 1px solid #ddd; /* Borde */
+  border-radius: 10px; /* Bordes redondeados */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  opacity: 0; /* Inicialmente oculto */
+  transform: translateY(20px); /* Inicia desplazado hacia abajo */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Transición para suavizar la aparición */
+}
+
+.producto img {
+  max-width: 40%; /* Imagen ajustada al tamaño de la tarjeta */
+  height: auto;
+  border-radius: 10px; /* Bordes redondeados para la imagen */
+  margin-bottom: 15px;
+}
+
+.producto h2 {
+  font-size: 1.5em; /* Tamaño del título */
+  margin-bottom: 10px;
+}
+
+.producto p {
+  font-size: 1em; /* Tamaño del texto */
+  margin-bottom: 5px;
+}
+
+.producto .precio {
+  font-size: 1.2em; /* Tamaño del precio */
+  font-weight: bold;
+  color: #28a745; /* Color del precio */
+  margin-top: 10px;
+}
+
+/* Mostrar producto gradualmente al hacer scroll */
+.producto.visible {
+  opacity: 1;
+  transform: translateY(0); /* Desplazamiento a la posición original */
+}
+
+/* Modal styles */
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 800px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body img {
+  max-width: 50%;
+  border-radius: 10px;
+}
+
+.product-details {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.product-details h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.product-details .precio {
+  font-size: 1.5em;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.product-details label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.product-details input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controls button {
+  padding: 10px;
+  margin: 0 5px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.quantity-controls input {
+  width: 50px;
+  text-align: center;
+  border: none;
+}
+
+.buy-button,
+.paypal-button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.buy-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.paypal-button {
+  background-color: #ffc439;
+  color: black;
+  margin-top: 10px;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Estilos para el modal de éxito */
+#successModal .modal-content {
+  max-width: 400px;
+}
+
+#successModal .modal-body {
+  text-align: center;
+}

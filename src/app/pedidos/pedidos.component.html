@@ -1,0 +1,25 @@
+<div class="pedidos-container">
+  <h2>Pedidos</h2>
+  <ul class="pedido-list">
+    <li *ngFor="let pedido of pedidos" class="pedido-item">
+      <div class="pedido-header">
+        <h3>Pedido #{{ pedido._id }}</h3>
+        <p><strong>Nombre:</strong> {{ pedido.correo || 'N/A' }}</p>
+        <p><strong>Correo:</strong> {{ pedido.correo || 'N/A' }}</p>
+      </div>
+      <div class="pedido-body">
+        <p *ngIf="pedido.direccion">
+          <strong>Dirección:</strong> {{ pedido.direccion.calle || 'N/A' }}, {{ pedido.direccion.numero || 'N/A' }}, {{ pedido.direccion.colonia || 'N/A' }}, {{ pedido.direccion.estado || 'N/A' }}
+        </p>
+        <p *ngIf="pedido.direccion"><strong>Teléfono:</strong> {{ pedido.direccion.phone || 'N/A' }}</p>
+        <p><strong>Total:</strong> {{ pedido.total }} MXN</p>
+        <p><strong>Detalles:</strong></p>
+        <ul class="pedido-detalle-list">
+          <li *ngFor="let item of pedido.cart" class="pedido-detalle-item">
+            {{ item.Nombre }} - {{ item.quantity }} x {{ item.Precio }} MXN
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

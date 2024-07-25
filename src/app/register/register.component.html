@@ -1,0 +1,53 @@
+<div class="register-container">
+  <h2>Registrarse</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="username">Nombre Completo</label>
+      <input type="text" id="username" formControlName="username" placeholder="Ingrese su Nombre">
+      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error">
+        El usuario es requerido.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Correo</label>
+      <input type="email" id="email" formControlName="email" placeholder="Ingrese su correo">
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+        El correo debe ser válido.
+      </div>
+    </div>
+    <div class="form-group password-group">
+      <label for="password">Contraseña</label>
+      <div class="input-wrapper">
+        <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Ingrese su contraseña">
+        <span class="show-password-icon" (click)="togglePasswordVisibility()">👁️</span>
+      </div>
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
+        La contraseña debe tener al menos 8 caracteres.
+      </div>
+    </div>
+    <div class="form-group password-group">
+      <label for="confirm-password">Repita su contraseña</label>
+      <div class="input-wrapper">
+        <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirm-password" formControlName="confirmPassword" placeholder="Repita su contraseña">
+        <span class="show-password-icon" (click)="toggleConfirmPasswordVisibility()">👁️</span>
+      </div>
+      <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error">
+        Las contraseñas deben coincidir.
+      </div>
+      <div *ngIf="registerForm.get('confirmPassword')?.valid && registerForm.get('password')?.value === registerForm.get('confirmPassword')?.value" class="success">
+        Contraseñas correctas.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="secret-question">Pregunta Secreta</label>
+      <select id="secret-question" formControlName="secretQuestion">
+        <option *ngFor="let question of secretQuestions" [value]="question">{{ question }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="secret-answer">Respuesta Secreta</label>
+      <input type="text" id="secret-answer" formControlName="secretAnswer" placeholder="Ingrese su respuesta">
+    </div>
+    <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
+  </form>
+</div>

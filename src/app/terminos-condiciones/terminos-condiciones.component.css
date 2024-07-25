@@ -1,0 +1,49 @@
+.termi {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.contenido h1, .contenido h3 {
+  margin-top: 20px;
+  font-size: 1.5em;
+  color: #444;
+}
+
+.contenido p {
+  margin: 10px 0;
+  text-align: justify;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #555;
+  padding: 0 15px;
+}
+
+.contenido ul {
+  list-style-type: disc;
+  padding-left: 40px;
+}
+
+.contenido li {
+  margin-bottom: 10px;
+}
+
+.contenido a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contenido a:hover {
+  text-decoration: underline;
+}
+
+.contenido blockquote {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  font-style: italic;
+}

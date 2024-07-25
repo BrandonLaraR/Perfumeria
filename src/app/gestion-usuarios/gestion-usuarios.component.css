@@ -1,0 +1,160 @@
+.gestion-usuarios-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.gestion-usuarios-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+thead th {
+  padding: 15px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f4f4f4;
+}
+
+tbody td {
+  padding: 15px;
+  text-align: left;
+  color: #555;
+}
+
+tbody td button {
+  margin-right: 5px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.product-image {
+  width: 100px;
+  height: auto;
+}
+
+.product-search-container {
+  margin-bottom: 20px;
+}
+
+.product-list {
+  list-style-type: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.product-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.product-list li:hover {
+  background-color: #f4f4f4;
+}
+
+.product-details {
+  margin-top: 20px;
+}
+
+.product-details h3 {
+  margin-bottom: 15px;
+}
+
+.product-details div {
+  margin-bottom: 10px;
+}
+
+.product-details label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-product-form {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.edit-product-form h3 {
+  margin-bottom: 15px;
+}
+
+.edit-product-form div {
+  margin-bottom: 10px;
+}
+
+.edit-product-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edit-product-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
