@@ -1,4 +1,3 @@
-// perfil.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -170,10 +169,10 @@ export class PerfilComponent implements OnInit {
       logoSize: this.logoSize
     };
 
-    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig', this.adminItems.map(item => ({
-      Titulo: item.label,
-      Contenido: configData[item.key]
-    })))
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig/colors', {
+      primary: this.adminConfig.colors.primary,
+      header: this.adminConfig.colors.header
+    })
       .subscribe(
         response => {
           console.log('Configuración guardada exitosamente:', response);
@@ -194,10 +193,10 @@ export class PerfilComponent implements OnInit {
       logoSize: this.logoSize
     };
 
-    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig', this.adminItems.map(item => ({
-      Titulo: item.label,
-      Contenido: configData[item.key]
-    })))
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig/colors', {
+      primary: this.adminConfig.colors.primary,
+      header: this.adminConfig.colors.header
+    })
       .subscribe(
         response => {
           console.log('Configuración guardada exitosamente:', response);

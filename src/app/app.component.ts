@@ -1,10 +1,9 @@
 // app.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +27,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.updateUserProfile();
     this.loadLogo();
+    this.loadColors();
   }
 
   updateUserProfile(): void {
@@ -47,6 +47,20 @@ export class AppComponent implements OnInit {
         },
         error => {
           console.error('Error al cargar el logo:', error);
+        }
+      );
+  }
+
+  loadColors(): void {
+    this.http.get<{ Contenido: { primary: string, header: string } }>('https://api-perfum-kf75.vercel.app/api/adminConfig/colors')
+      .subscribe(
+        (data: any) => {
+          const colors = data.Contenido;
+          document.documentElement.style.setProperty('--primary-color', colors.primary);
+          document.documentElement.style.setProperty('--header-color', colors.header);
+        },
+        error => {
+          console.error('Error al cargar colores:', error);
         }
       );
   }
