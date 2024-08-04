@@ -18,6 +18,8 @@ export class GestionUsuariosComponent implements OnInit {
   public isEditingProduct = false;
   public currentProduct: any = {};
   public productSearchText: string = '';
+  public alertMessage: string = '';
+  public modalMessage: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -27,7 +29,7 @@ export class GestionUsuariosComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.http.get<any[]>('https://apielixir.onrender.com/api/usuarios')
+    this.http.get<any[]>('https://api-perfum-kf75.vercel.app/api/usuarios')
       .subscribe(
         data => {
           this.users = data;
@@ -39,7 +41,7 @@ export class GestionUsuariosComponent implements OnInit {
   }
 
   loadProductos(): void {
-    this.http.get<any[]>('https://apielixir.onrender.com/api/productos')
+    this.http.get<any[]>('https://api-perfum-kf75.vercel.app/api/productos')
       .subscribe(
         data => {
           this.productos = data;
@@ -69,11 +71,11 @@ export class GestionUsuariosComponent implements OnInit {
 
   deleteUser(user: any): void {
     if (confirm(`¿Estás seguro de que quieres eliminar al usuario ${user.nombre}?`)) {
-      this.http.delete(`https://apielixir.onrender.com/api/usuarios/${user._id}`)
+      this.http.delete(`https://api-perfum-kf75.vercel.app/api/usuarios/${user._id}`)
         .subscribe(
           () => {
             this.users = this.users.filter(u => u._id !== user._id);
-            alert('Usuario eliminado exitosamente');
+            this.showModalMessage('Usuario eliminado exitosamente');
           },
           error => {
             console.error('Error al eliminar usuario:', error);
@@ -83,12 +85,12 @@ export class GestionUsuariosComponent implements OnInit {
   }
 
   toggleAdmin(user: any): void {
-    const url = `https://apielixir.onrender.com/api/usuarios/${user._id}/${user.isAdmin ? 'removeAdmin' : 'makeAdmin'}`;
+    const url = `https://api-perfum-kf75.vercel.app/api/usuarios/${user._id}/${user.isAdmin ? 'removeAdmin' : 'makeAdmin'}`;
     this.http.put(url, { isAdmin: !user.isAdmin })
       .subscribe(
         () => {
           user.isAdmin = !user.isAdmin;
-          alert('Permisos de administrador actualizados exitosamente');
+          this.showModalMessage('Permisos de administrador actualizados exitosamente');
         },
         error => {
           console.error('Error al actualizar permisos de administrador:', error);
@@ -106,13 +108,36 @@ export class GestionUsuariosComponent implements OnInit {
     this.isEditingProduct = false;
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      this.http.post<{ url: string }>('https://api-perfum-kf75.vercel.app/api/upload', formData)
+        .subscribe(
+          response => {
+            this.currentProduct.imagen = response.url;
+            this.showModalMessage('Imagen editada exitosamente');
+          },
+          error => {
+            console.error('Error al subir la imagen:', error);
+            this.showModalMessage('Hubo un error al subir la imagen');
+          }
+        );
+    }
+  }
+
   updateProduct(): void {
-    const url = `https://apielixir.onrender.com/api/productos/${this.currentProduct._id}`;
+    const url = `https://api-perfum-kf75.vercel.app/api/productos/${this.currentProduct._id}`;
     this.http.put(url, this.currentProduct)
       .subscribe(
         () => {
           this.loadProductos();
-          alert('Producto actualizado exitosamente');
+          this.showModalMessage('Producto actualizado exitosamente');
+          // Reflejar cambios inmediatamente en la sección de detalles del producto
+          if (this.selectedProduct && this.selectedProduct._id === this.currentProduct._id) {
+            this.selectedProduct = { ...this.currentProduct };
+          }
           this.cancelEdit();
         },
         error => {
@@ -122,19 +147,37 @@ export class GestionUsuariosComponent implements OnInit {
   }
 
   deleteProduct(productId: string): void {
-    const url = `https://apielixir.onrender.com/api/productos/${productId}`;
+    const url = `https://api-perfum-kf75.vercel.app/api/productos/${productId}`;
     if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
       this.http.delete(url)
         .subscribe(
           () => {
             this.loadProductos();
             this.selectedProduct = null;
-            alert('Producto eliminado exitosamente');
+            this.showModalMessage('Producto eliminado exitosamente');
           },
           error => {
             console.error('Error al eliminar producto:', error);
           }
         );
     }
+  }
+
+  showAlertMessage(message: string): void {
+    this.alertMessage = message;
+    setTimeout(() => {
+      this.alertMessage = '';
+    }, 3000);
+  }
+
+  showModalMessage(message: string): void {
+    this.modalMessage = message;
+    setTimeout(() => {
+      this.modalMessage = '';
+    }, 3000);
+  }
+
+  closeModal(): void {
+    this.modalMessage = '';
   }
 }

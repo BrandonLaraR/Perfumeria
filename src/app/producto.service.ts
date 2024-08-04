@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'https://apielixir.onrender.com/api/Productos';
+  private apiUrl = 'https://api-perfum-kf75.vercel.app/api/Productos';
 
   constructor(private http: HttpClient) { }
 

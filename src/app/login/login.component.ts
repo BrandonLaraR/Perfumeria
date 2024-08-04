@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const loginData = { correo: this.email, password: this.password };
 
-    this.http.post<any>('https://apielixir.onrender.com/api/usuarios/loginCorreo', loginData).subscribe({
+    this.http.post<any>('https://api-perfum-kf75.vercel.app/api/usuarios/loginCorreo', loginData).subscribe({
       next: (response) => {
         if (response) {
           this.authService.setProfile(response);
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
   }
 
   loadSecretQuestions(): void {
-    this.http.get<string[]>('https://apielixir.onrender.com/api/preguntasSecretas').subscribe({
+    this.http.get<string[]>('https://api-perfum-kf75.vercel.app/api/preguntasSecretas').subscribe({
       next: (questions) => {
         this.secretQuestions = questions;
       },
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
       respuestaSecreta: this.recoverySecretAnswer
     };
 
-    this.http.post('https://apielixir.onrender.com/api/usuarios/recuperarPassword', recoveryData).subscribe({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/usuarios/recuperarPassword', recoveryData).subscribe({
       next: (response) => {
         alert('Respuesta secreta correcta. Por favor, cambie su contraseña.');
         this.showSecretQuestionModal = false;
@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
   }
 
   sendRecoveryCode(): void {
-    this.http.post('https://apielixir.onrender.com/api/usuarios/enviarCodigoRecuperacion', { correo: this.recoveryEmail }).subscribe({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/usuarios/enviarCodigoRecuperacion', { correo: this.recoveryEmail }).subscribe({
       next: (response) => {
         alert('Código de recuperación enviado a su correo electrónico.');
         this.showEmailRecoveryModal = false;
@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
   verifyRecoveryCode(): void {
     const codeData = { correo: this.recoveryEmail, codigo: this.recoveryCode };
 
-    this.http.post('https://apielixir.onrender.com/api/usuarios/verificarCodigoRecuperacion', codeData).subscribe({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/usuarios/verificarCodigoRecuperacion', codeData).subscribe({
       next: (response) => {
         alert('Código verificado. Por favor, cambie su contraseña.');
         this.showEnterCodeModal = false;
@@ -149,7 +149,7 @@ export class LoginComponent implements OnInit {
       nuevaPassword: this.newPassword
     };
 
-    this.http.post('https://apielixir.onrender.com/api/usuarios/cambiarPassword', changePasswordData).subscribe({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/usuarios/cambiarPassword', changePasswordData).subscribe({
       next: (response) => {
         alert('Contraseña cambiada exitosamente.');
         this.showChangePasswordModal = false;

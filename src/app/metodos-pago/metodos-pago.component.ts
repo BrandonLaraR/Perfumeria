@@ -19,7 +19,7 @@ export class MetodosPagoComponent implements OnInit {
   }
 
   obtenerMetodosPago() {
-    this.http.get<any>('https://apielixir.onrender.com/api/metodos-pago')
+    this.http.get<any>('https://api-perfum-kf75.vercel.app/api/metodos-pago')
       .subscribe(
         data => {
           console.log('Datos obtenidos:', data);

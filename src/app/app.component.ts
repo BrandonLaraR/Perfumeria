@@ -1,7 +1,8 @@
+// app.component.ts
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { EventEmitter } from '@angular/core';
 
@@ -17,14 +18,16 @@ export class AppComponent implements OnInit {
   loggedIn = false;
   userName: string = '';
   isAdmin = false;
+  logoUrl: string | null = null;
   static loginEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private http: HttpClient) {
     AppComponent.loginEvent.subscribe(() => this.updateUserProfile());
   }
 
   ngOnInit(): void {
     this.updateUserProfile();
+    this.loadLogo();
   }
 
   updateUserProfile(): void {
@@ -34,6 +37,18 @@ export class AppComponent implements OnInit {
       this.userName = userProfile.nombre;
       this.isAdmin = userProfile.isAdmin;
     }
+  }
+
+  loadLogo(): void {
+    this.http.get<{ Contenido: string }>('https://api-perfum-kf75.vercel.app/api/adminConfig/logo')
+      .subscribe(
+        (data: any) => {
+          this.logoUrl = data.Contenido;
+        },
+        error => {
+          console.error('Error al cargar el logo:', error);
+        }
+      );
   }
 
   logout(): void {

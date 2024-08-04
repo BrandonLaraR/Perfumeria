@@ -125,7 +125,7 @@ export class CartComponent implements OnInit {
     };
 
     try {
-      const response = await this.http.post('https://apielixir.onrender.com/api/pedidos', orderData).toPromise();
+      const response = await this.http.post('https://api-perfum-kf75.vercel.app/api/pedidos', orderData).toPromise();
       console.log('Pedido guardado exitosamente:', response);
     } catch (error) {
       console.error('Error al guardar el pedido:', error);

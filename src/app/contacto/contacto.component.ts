@@ -19,7 +19,7 @@ export class ContactoComponent implements OnInit {
   }
 
   obtenerContacto() {
-    this.http.get<any>('https://apielixir.onrender.com/api/contacto')
+    this.http.get<any>('https://api-perfum-kf75.vercel.app/api/contacto')
       .subscribe(
         data => {
           console.log('Datos obtenidos:', data);

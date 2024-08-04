@@ -19,7 +19,7 @@ export class VisionMisionComponent implements OnInit {
   }
 
   obtenerVisionMision() {
-    this.http.get<any>('https://apielixir.onrender.com/api/vision-mision')
+    this.http.get<any>('https://api-perfum-kf75.vercel.app/api/vision-mision')
       .subscribe(
         data => {
           console.log('Datos obtenidos:', data);

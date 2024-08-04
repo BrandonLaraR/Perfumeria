@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
   }
 
   loadSecretQuestions(): void {
-    this.http.get<string[]>('https://apielixir.onrender.com/api/preguntasSecretas').subscribe({
+    this.http.get<string[]>('https://api-perfum-kf75.vercel.app/api/preguntasSecretas').subscribe({
       next: (questions) => {
         this.secretQuestions = questions;
       },
@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
       respuestaSecreta: this.registerForm.value.secretAnswer
     };
 
-    this.http.post('https://apielixir.onrender.com/api/usuarios/register', user).subscribe({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/usuarios/register', user).subscribe({
       next: (response) => {
         alert('Usuario registrado exitosamente');
         this.router.navigate(['/login']);

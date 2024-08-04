@@ -19,7 +19,7 @@ export class QuienesSomosComponent implements OnInit {
   }
 
   obtenerQuienesSomos() {
-    this.http.get<any>('https://apielixir.onrender.com/api/quienes-somos')
+    this.http.get<any>('https://api-perfum-kf75.vercel.app/api/quienes-somos')
       .subscribe(
         data => {
           console.log('Datos obtenidos:', data);

@@ -1,3 +1,5 @@
+<!-- src/app/components/perfil/perfil.component.html -->
+
 <div class="alert" *ngIf="showAlert">{{ alertMessage }}</div>
 
 <div class="perfil-admin-container">
@@ -144,6 +146,17 @@
         <input [(ngModel)]="logoSize" type="text" placeholder="Ej. 100x100" />
       </div>
     </div>
+    <div *ngIf="currentItem.key === 'images'">
+      <label>{{ currentItem.label }}:</label>
+      <div class="image-upload-preview">
+        <div *ngFor="let image of adminConfig.images; let i = index">
+          <input type="file" (change)="onFileSelected($event, i)" accept="image/png, image/jpeg" />
+          <div *ngIf="adminConfig.images[i]" class="image-preview">
+            <img [src]="adminConfig.images[i]" alt="Preview" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="modal-buttons">
       <button (click)="saveConfig()" *ngIf="currentItem.key !== 'policies' && currentItem.key !== 'about' && currentItem.key !== 'vision' && currentItem.key !== 'terms'" class="button">Guardar</button>
       <button (click)="savePolicies()" *ngIf="currentItem.key === 'policies'" class="button">Guardar</button>
@@ -168,8 +181,12 @@
       <input [(ngModel)]="newProducto.Precio" type="text" />
     </div>
     <div>
+      <label>Imagen del Producto:</label>
+      <input type="file" (change)="onFileSelected($event, 'product')" accept="image/png, image/jpeg" />
+    </div>
+    <div>
       <label>URL de la Imagen:</label>
-      <input [(ngModel)]="newProducto.imagen" type="text" />
+      <input [(ngModel)]="newProducto.imagen" type="text" disabled />
     </div>
     <button (click)="addProduct()" class="button">Agregar Producto</button>
   </div>

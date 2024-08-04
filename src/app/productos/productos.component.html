@@ -43,6 +43,42 @@
         <button class="buy-button" (click)="addToCart()">Agregar al carrito</button>
       </div>
     </div>
+    <div class="reviews-section">
+      <button class="write-review-button" (click)="openReviewModal()">Escribir una reseña</button>
+      <h3>Reseñas</h3>
+      <div *ngFor="let review of selectedProducto.reviews" class="review">
+        <p><strong>{{ review.nombre }}</strong></p>
+        <p>Calificación: {{ review.rating }}</p>
+        <p>{{ review.descripcion }}</p>
+        <img *ngIf="review.imageUrl" [src]="review.imageUrl" class="review-image" alt="Imagen de reseña">
+        <p class="review-date">{{ review.createdAt | date: 'short' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de reseñas -->
+<div id="reviewModal" class="modal" *ngIf="showReviewModal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <span class="close" (click)="closeReviewModal()">&times;</span>
+      <h2>Escribir una reseña</h2>
+      <label for="reviewName">Nombre</label>
+      <input type="text" id="reviewName" [(ngModel)]="reviewName">
+      <label for="reviewRating">Puntuación</label>
+      <select id="reviewRating" [(ngModel)]="reviewRating">
+        <option value="">Seleccione</option>
+        <option value="Malo">Malo</option>
+        <option value="Regular">Regular</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Excelente">Excelente</option>
+      </select>
+      <label for="reviewDescription">Descripción</label>
+      <textarea id="reviewDescription" [(ngModel)]="reviewDescription"></textarea>
+      <label for="reviewImage">Subir imagen</label>
+      <input type="file" id="reviewImage" (change)="onFileChange($event)">
+      <button (click)="submitReview()">Enviar reseña</button>
+    </div>
   </div>
 </div>
 

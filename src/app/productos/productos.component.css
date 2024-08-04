@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+  margin-top: 50px;
 }
 
 .search-container {
@@ -122,7 +122,7 @@
 }
 
 .producto img {
-  max-width: 40%; /* Imagen ajustada al tamaño de la tarjeta */
+  max-width: 80%; /* Imagen ajustada al tamaño de la tarjeta */
   height: auto;
   border-radius: 10px; /* Bordes redondeados para la imagen */
   margin-bottom: 15px;
@@ -175,20 +175,20 @@
   max-width: 800px;
   border-radius: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   position: relative;
 }
 
 .modal-body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .modal-body img {
-  max-width: 50%;
+  max-width: 100%;
   border-radius: 10px;
 }
 
@@ -289,4 +289,146 @@
 
 #successModal .modal-body {
   text-align: center;
+}
+
+.reviews-section {
+  margin-top: 20px;
+}
+
+.reviews-section h3 {
+  margin-bottom: 10px;
+}
+
+.review {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.write-review-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.review-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.review-date {
+  font-size: 0.8em;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* Estilos para el modal de reseñas */
+#reviewModal .modal-content {
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#reviewModal .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#reviewModal .modal-body label {
+  align-self: flex-start;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#reviewModal .modal-body input[type="text"],
+#reviewModal .modal-body select,
+#reviewModal .modal-body textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#reviewModal .modal-body input[type="file"] {
+  margin-top: 10px;
+}
+
+#reviewModal .modal-body button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#reviewModal .modal-body button:hover {
+  background-color: #218838;
+}
+
+#reviewModal .modal-body h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+#reviewModal .close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+#reviewModal .close:hover,
+#reviewModal .close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .producto {
+    width: calc(45% - 40px); /* Ajuste el ancho de la tarjeta en pantallas más pequeñas */
+  }
+
+  .modal-content {
+    width: 90%; /* Ajustar el ancho del modal en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .producto {
+    width: calc(100% - 40px); /* Ajuste el ancho de la tarjeta en pantallas pequeñas */
+  }
+
+  .modal-content {
+    width: 95%; /* Ajustar el ancho del modal en pantallas pequeñas */
+  }
+
+  .search-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search_input {
+    width: 100%; /* Ajustar el ancho de la barra de búsqueda */
+  }
+
+  .search_icon {
+    font-size: 1em; /* Ajustar el tamaño del icono de búsqueda */
+  }
 }

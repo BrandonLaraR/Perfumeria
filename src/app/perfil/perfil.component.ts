@@ -1,3 +1,4 @@
+// perfil.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,7 +30,7 @@ export class PerfilComponent implements OnInit {
   ];
   public adminConfig: any = {
     logo: '',
-    images: [''],
+    images: ['', '', ''],
     colors: {
       primary: '#110d03',
       header: '#000000'
@@ -90,7 +91,7 @@ export class PerfilComponent implements OnInit {
       phone: this.userProfile.phone
     };
 
-    this.http.post('https://apielixir.onrender.com/api/usuarios/updateProfile', updatedData)
+    this.http.post('https://api-perfum-kf75.vercel.app/api/usuarios/updateProfile', updatedData)
       .subscribe(
         (response: any) => {
           this.userProfile = response;
@@ -145,7 +146,7 @@ export class PerfilComponent implements OnInit {
       logoSize: this.logoSize
     };
 
-    this.http.post('https://apielixir.onrender.com/api/adminConfig', this.adminItems.map(item => ({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig', this.adminItems.map(item => ({
       Titulo: item.label,
       Contenido: configData[item.key]
     })))
@@ -169,7 +170,7 @@ export class PerfilComponent implements OnInit {
       logoSize: this.logoSize
     };
 
-    this.http.post('https://apielixir.onrender.com/api/adminConfig', this.adminItems.map(item => ({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig', this.adminItems.map(item => ({
       Titulo: item.label,
       Contenido: configData[item.key]
     })))
@@ -193,7 +194,7 @@ export class PerfilComponent implements OnInit {
       logoSize: this.logoSize
     };
 
-    this.http.post('https://apielixir.onrender.com/api/adminConfig', this.adminItems.map(item => ({
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig', this.adminItems.map(item => ({
       Titulo: item.label,
       Contenido: configData[item.key]
     })))
@@ -211,16 +212,61 @@ export class PerfilComponent implements OnInit {
       );
   }
 
-  onFileSelected(event: any, key: string): void {
+  onFileSelected(event: any, index: number | string): void {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      this.http.post('https://apielixir.onrender.com/api/upload', formData)
-        .subscribe((response: any) => {
-          this.adminConfig[key] = response.filePath;
-        });
+      this.http.post<{ url: string }>('https://api-perfum-kf75.vercel.app/api/upload', formData)
+        .subscribe(
+          response => {
+            if (typeof index === 'number') {
+              this.adminConfig.images[index] = response.url;
+            } else if (index === 'logo') {
+              this.adminConfig.logo = response.url;
+              this.saveLogoConfig(response.url);
+            } else if (index === 'product') {
+              this.newProducto.imagen = response.url;
+            }
+            this.saveImagesConfig();
+            this.showAlertMessage('Imagen subida exitosamente');
+          },
+          error => {
+            console.error('Error al subir la imagen:', error);
+            this.showAlertMessage('Hubo un error al subir la imagen');
+          }
+        );
     }
+  }
+
+  saveLogoConfig(url: string): void {
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig/logo', { logo: url })
+      .subscribe(
+        response => {
+          console.log('Logo guardado exitosamente:', response);
+        },
+        error => {
+          console.error('Error al guardar el logo:', error);
+          this.showAlertMessage('Hubo un error al guardar el logo');
+        }
+      );
+  }
+
+  saveImagesConfig(): void {
+    const imagesData = {
+      images: this.adminConfig.images
+    };
+
+    this.http.post('https://api-perfum-kf75.vercel.app/api/adminConfig/images', imagesData)
+      .subscribe(
+        response => {
+          console.log('URLs de imágenes guardadas exitosamente:', response);
+        },
+        error => {
+          console.error('Error al guardar URLs de imágenes:', error);
+          this.showAlertMessage('Hubo un error al guardar las URLs de las imágenes');
+        }
+      );
   }
 
   applyColorChange(): void {
@@ -237,7 +283,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadAdminConfig(): void {
-    this.http.get('https://apielixir.onrender.com/api/adminConfig')
+    this.http.get('https://api-perfum-kf75.vercel.app/api/adminConfig')
       .subscribe(
         (data: any) => {
           data.forEach((item: any) => {
@@ -252,10 +298,23 @@ export class PerfilComponent implements OnInit {
           console.error('Error al cargar configuración:', error);
         }
       );
+    this.loadLogo();
+  }
+
+  loadLogo(): void {
+    this.http.get<{ Contenido: string }>('https://api-perfum-kf75.vercel.app/api/adminConfig/logo')
+      .subscribe(
+        response => {
+          this.adminConfig.logo = response.Contenido;
+        },
+        error => {
+          console.error('Error al cargar el logo:', error);
+        }
+      );
   }
 
   loadPolicies(): void {
-    this.http.get('https://apielixir.onrender.com/api/politicas')
+    this.http.get('https://api-perfum-kf75.vercel.app/api/politicas')
       .subscribe(
         (data: any) => {
           this.adminConfig.policies = data.Contenido;
@@ -267,7 +326,7 @@ export class PerfilComponent implements OnInit {
   }
 
   savePolicies(): void {
-    this.http.put('https://apielixir.onrender.com/api/politicas', { Contenido: this.adminConfig.policies })
+    this.http.put('https://api-perfum-kf75.vercel.app/api/politicas', { Contenido: this.adminConfig.policies })
       .subscribe(
         response => {
           this.showAlertMessage('Políticas guardadas exitosamente');
@@ -281,7 +340,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadAbout(): void {
-    this.http.get('https://apielixir.onrender.com/api/quienes-somos')
+    this.http.get('https://api-perfum-kf75.vercel.app/api/quienes-somos')
       .subscribe(
         (data: any) => {
           this.adminConfig.about = data.Contenido;
@@ -293,7 +352,7 @@ export class PerfilComponent implements OnInit {
   }
 
   saveAbout(): void {
-    this.http.put('https://apielixir.onrender.com/api/quienes-somos', { Contenido: this.adminConfig.about })
+    this.http.put('https://api-perfum-kf75.vercel.app/api/quienes-somos', { Contenido: this.adminConfig.about })
       .subscribe(
         response => {
           this.showAlertMessage('Quiénes Somos guardado exitosamente');
@@ -307,7 +366,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadVisionMission(): void {
-    this.http.get('https://apielixir.onrender.com/api/vision-mision')
+    this.http.get('https://api-perfum-kf75.vercel.app/api/vision-mision')
       .subscribe(
         (data: any) => {
           this.adminConfig.vision = data.Contenido;
@@ -319,7 +378,7 @@ export class PerfilComponent implements OnInit {
   }
 
   saveVisionMission(): void {
-    this.http.put('https://apielixir.onrender.com/api/admin/vision-mision', { Contenido: this.adminConfig.vision })
+    this.http.put('https://api-perfum-kf75.vercel.app/api/admin/vision-mision', { Contenido: this.adminConfig.vision })
       .subscribe(
         response => {
           this.showAlertMessage('Visión y Misión guardadas exitosamente');
@@ -333,7 +392,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadTerms(): void {
-    this.http.get('https://apielixir.onrender.com/api/terminos-condiciones')
+    this.http.get('https://api-perfum-kf75.vercel.app/api/terminos-condiciones')
       .subscribe(
         (data: any) => {
           this.adminConfig.terms = data.Contenido;
@@ -345,7 +404,7 @@ export class PerfilComponent implements OnInit {
   }
 
   saveTerms(): void {
-    this.http.put('https://apielixir.onrender.com/api/terminos-condiciones', { Contenido: this.adminConfig.terms })
+    this.http.put('https://api-perfum-kf75.vercel.app/api/terminos-condiciones', { Contenido: this.adminConfig.terms })
       .subscribe(
         response => {
           this.showAlertMessage('Términos y Condiciones guardados exitosamente');
@@ -367,7 +426,7 @@ export class PerfilComponent implements OnInit {
   }
 
   loadUserOrders(): void {
-    this.http.get<any[]>('https://apielixir.onrender.com/api/pedidos', { params: { correo: this.userProfile?.correo } })
+    this.http.get<any[]>('https://api-perfum-kf75.vercel.app/api/pedidos', { params: { correo: this.userProfile?.correo } })
       .subscribe(
         (orders: any[]) => {
           this.userProfile.orders = orders;
@@ -378,7 +437,6 @@ export class PerfilComponent implements OnInit {
       );
   }
 
-
   addProduct(): void {
     const newProduct = {
       Nombre: this.newProducto.Nombre,
@@ -386,7 +444,7 @@ export class PerfilComponent implements OnInit {
       imagen: this.newProducto.imagen
     };
 
-    this.http.post('https://apielixir.onrender.com/api/agregarProducto', newProduct)
+    this.http.post('https://api-perfum-kf75.vercel.app/api/agregarProducto', newProduct)
       .subscribe(
         response => {
           this.showAlertMessage('Producto agregado exitosamente');

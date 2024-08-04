@@ -19,7 +19,7 @@ export class TerminosCondicionesComponent implements OnInit {
   }
 
   obtenerTerminosCondiciones() {
-    this.http.get<any>('https://apielixir.onrender.com/api/terminos-condiciones')
+    this.http.get<any>('https://api-perfum-kf75.vercel.app/api/terminos-condiciones')
       .subscribe(
         data => {
           console.log('Datos obtenidos:', data);

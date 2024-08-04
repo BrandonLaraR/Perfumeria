@@ -1,6 +1,8 @@
+<!-- src/app/components/app.component.html -->
+
 <nav>
   <a routerLink="/">
-    <img src="/assets/images/logo2.png" class="logo" alt="Logo">
+    <img [src]="logoUrl" class="logo" alt="Logo">
   </a>
   <ng-container *ngIf="!loggedIn || !isAdmin">
     <a routerLink="/">Inicio</a>

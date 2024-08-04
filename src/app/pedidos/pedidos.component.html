@@ -20,6 +20,25 @@
           </li>
         </ul>
       </div>
+      <div *ngIf="pedido.completado" class="pedido-completado">
+        Pedido Completado
+      </div>
+      <button *ngIf="!pedido.completado" (click)="openModal(pedido)" class="confirmar-pedido-btn">
+        Confirmar Pedido
+      </button>
     </li>
   </ul>
+</div>
+
+<!-- Modal -->
+<div *ngIf="selectedPedido" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Confirmar Pedido</h2>
+    <p>Pedido #{{ selectedPedido._id }}</p>
+    <p><strong>Correo:</strong> {{ selectedPedido.correo }}</p>
+    <label for="trackingNumber">Número de Guía:</label>
+    <input type="text" id="trackingNumber" [(ngModel)]="trackingNumber">
+    <button (click)="confirmarPedido()" class="aceptar-btn">Aceptar</button>
+  </div>
 </div>

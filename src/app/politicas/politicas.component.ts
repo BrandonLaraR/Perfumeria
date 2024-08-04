@@ -19,7 +19,7 @@ export class PoliticasComponent implements OnInit {
   }
 
   obtenerPoliticas() {
-    this.http.get<any>('https://apielixir.onrender.com/api/politicas')
+    this.http.get<any>('https://api-perfum-kf75.vercel.app/api/politicas')
       .subscribe(
         data => {
           console.log('Datos obtenidos:', data);
